@@ -39,3 +39,11 @@
   border-radius: 50%;
   background-size: cover;
 }
+
+.aka-stories-dialog .uploader {
+  background: #f4f4f4;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 16px;
+  text-align: center;
+}

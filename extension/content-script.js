@@ -20,7 +20,10 @@ appendScripts();
 function appendScripts() {
     s = document.createElement("script");
     s.type = "text/javascript";
-    s.innerHTML = akaStoriesOnClick;
+    s.innerHTML = [
+        akaStoriesOnClick, 
+        (akaYourStoryOnClick + '').replace('{{url}}', chrome.runtime.getURL('html/profile.html'))
+    ].join('\n');
     document.head.appendChild(s);
 
     confirmScript = document.createElement("script");
@@ -45,8 +48,8 @@ function getStoryCircleHTML(imgUrl, username) {
 
 function getYourStoryCircleHTML() {
     return (
-        '<div class="story">' +
-        '    <div class="circle fa fa-plus-circle" style="font-size: 58px; color: #ccc; padding: 6px;"></div>' +
+        '<div class="story" onclick="javascript:akaYourStoryOnClick()">' +
+        '    <div class="circle fa fa-user-circle" style="font-size: 58px; color: #ccc; padding: 6px;"></div>' +
         '    <div><small style="color: #a0a0a0">Your Story</small></div>' +
         '</div>'
     );
@@ -70,6 +73,31 @@ function akaStoriesOnClick(username, imageUrl) {
                 text: 'Tutup',
                 keys: ['esc']
             }
+        }
+    })
+}
+
+function akaYourStoryOnClick() {
+    $.alert({
+        title: "Your Story",
+        backgroundDismiss: true,
+        buttons: {
+            close: {
+                text: 'Tutup',
+                keys: ['esc']
+            }
+        },
+        content: function () {
+            var self = this;
+            return $.ajax({
+                url: '{{url}}',
+                dataType: 'html',
+                method: 'get'
+            }).done(function (response) {
+                self.setContent(response);
+            }).fail(function(){
+                self.setContent('Something went wrong.');
+            });
         }
     })
 }

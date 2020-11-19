@@ -2,6 +2,10 @@
     "name": "Akademik Stories",
     "version": "0.1",
     "description": "Enhance your SIX home page with some good 'ol Stories!",
+    "web_accessible_resources": [
+      "script.js",
+      "html/profile.html"
+    ],
     "permissions": [
         "activeTab"
       ],
