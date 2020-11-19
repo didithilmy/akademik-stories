@@ -1,0 +1,41 @@
+.aka-stories {
+  border-bottom: 1px solid #ccc;
+  padding: 8px;
+  padding-bottom: 16px;
+  display: flex;
+  flex-direction: row;
+  overflow: auto;
+}
+
+.aka-stories .story {
+    text-align: center;
+    margin: 0 12px 0 12px;
+}
+
+.aka-stories .circle {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.aka-stories .circle > svg {
+  fill: none;
+  stroke: #337AB7;
+  stroke-linecap: round;
+  stroke-width: 3;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+.aka-stories .circle > .img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background-size: cover;
+}

@@ -1,0 +1,19 @@
+{
+    "name": "Akademik Stories",
+    "version": "0.1",
+    "description": "Enhance your SIX home page with some good 'ol Stories!",
+    "permissions": [
+        "activeTab"
+      ],
+      "content_scripts": [
+        {
+          "matches": [
+              "https://akademik.itb.ac.id/",
+              "https://akademik.itb.ac.id/?context=*"
+            ],
+          "js": ["content-script.js"],
+          "css": ["styles.css"] 
+        }
+      ],
+    "manifest_version": 2
+}
