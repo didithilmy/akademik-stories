@@ -1,0 +1,69 @@
+<script type="text/javascript">
+    function openFollowers() {
+        $("#tab-followers").addClass("active");
+        $("#tab-following").removeClass("active");
+        $("#aka-stories-followers").show();
+        $("#aka-stories-following").hide();
+    }
+
+    function openFollowing() {
+        $("#tab-following").addClass("active");
+        $("#tab-followers").removeClass("active");
+        $("#aka-stories-following").show();
+        $("#aka-stories-followers").hide();
+    }
+</script>
+<style type="text/css">
+    .aka-stories-dialog ul.nav-tabs li {
+        cursor: pointer;
+    }
+</style>
+<div class="aka-stories-dialog">
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active" id="tab-followers"><a onclick="openFollowers();">Followers</a></li>
+        <li role="presentation" id="tab-following"><a onclick="openFollowing();">Following</a></li>
+    </ul>
+    <div id="aka-stories-followers">
+        <table class="table">
+            <tr>
+                <td>rid1hady</td>
+                <td align="right">
+                    <i class="glyphicon glyphicon-remove-circle"></i>
+                </td>
+            </tr>
+            <tr>
+                <td>luthfihakim</td>
+                <td align="right">
+                    <i class="glyphicon glyphicon-remove-circle"></i>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="aka-stories-following" style="display: none">
+        <table class="table">
+            <tr>
+                <td>rid1hady</td>
+                <td align="right">
+                    <i class="glyphicon glyphicon-remove-circle"></i>
+                </td>
+            </tr>
+            <tr>
+                <td>adyaksa_w</td>
+                <td align="right">
+                    <i class="glyphicon glyphicon-remove-circle"></i>
+                </td>
+            </tr>
+            <tr>
+                <td>luthfihakim</td>
+                <td align="right">
+                    <i class="glyphicon glyphicon-remove-circle"></i>
+                </td>
+            </tr>
+        </table>
+        <div style="height: 16px"></div>
+        <label for="follow-username">Follow username:</label>
+        <div class="input-group" style="width: 100%">
+            <input type="text" class="form-control" id="follow-username">
+        </div>
+    </div>
+</div>

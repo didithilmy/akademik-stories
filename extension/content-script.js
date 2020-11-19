@@ -3,6 +3,7 @@ div.className = "aka-stories col-xs-12 pa-2"
 
 var stories = [
     getYourStoryCircleHTML(),
+    getFollowersCircleHTML(),
     getStoryCircleHTML('https://storage.googleapis.com/hmif-insights/portraits/17/18217025.jpg', 'didithilmy'),
     getStoryCircleHTML('https://storage.googleapis.com/hmif-insights/portraits/17/13517007.jpg', 'rid1hady'),
     getStoryCircleHTML('https://storage.googleapis.com/hmif-insights/portraits/17/13517091.jpg', 'adyaksa_w'),
@@ -22,7 +23,8 @@ function appendScripts() {
     s.type = "text/javascript";
     s.innerHTML = [
         akaStoriesOnClick, 
-        (akaYourStoryOnClick + '').replace('{{url}}', chrome.runtime.getURL('html/profile.html'))
+        (akaYourStoryOnClick + '').replace('{{url}}', chrome.runtime.getURL('html/profile.html')),
+        (akaFollowersOnClick + '').replace('{{url}}', chrome.runtime.getURL('html/followers.html'))
     ].join('\n');
     document.head.appendChild(s);
 
@@ -55,6 +57,15 @@ function getYourStoryCircleHTML() {
     );
 }
 
+function getFollowersCircleHTML() {
+    return (
+        '<div class="story" onclick="javascript:akaFollowersOnClick()">' +
+        '    <div class="circle fa fa-plus-circle" style="font-size: 58px; color: #ccc; padding: 6px;"></div>' +
+        '    <div><small style="color: #a0a0a0">Followers</small></div>' +
+        '</div>'
+    );
+}
+
 function getNim() {
     navbarBrandLink = document.getElementsByClassName("navbar-brand")[0];
     href = navbarBrandLink.href;
@@ -80,6 +91,31 @@ function akaStoriesOnClick(username, imageUrl) {
 function akaYourStoryOnClick() {
     $.alert({
         title: "Your Story",
+        backgroundDismiss: true,
+        buttons: {
+            close: {
+                text: 'Tutup',
+                keys: ['esc']
+            }
+        },
+        content: function () {
+            var self = this;
+            return $.ajax({
+                url: '{{url}}',
+                dataType: 'html',
+                method: 'get'
+            }).done(function (response) {
+                self.setContent(response);
+            }).fail(function(){
+                self.setContent('Something went wrong.');
+            });
+        }
+    })
+}
+
+function akaFollowersOnClick() {
+    $.alert({
+        title: "Followers & Following",
         backgroundDismiss: true,
         buttons: {
             close: {

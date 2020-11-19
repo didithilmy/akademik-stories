@@ -4,7 +4,8 @@
     "description": "Enhance your SIX home page with some good 'ol Stories!",
     "web_accessible_resources": [
       "script.js",
-      "html/profile.html"
+      "html/profile.html",
+      "html/followers.html"
     ],
     "permissions": [
         "activeTab"
