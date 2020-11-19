@@ -1,0 +1,7 @@
+Django~=3.1
+djangorestframework~=3.12
+django-resized
+django-cors-headers
+gunicorn~=20.0
+dj-database-url
+psycopg2-binary~=2.8
