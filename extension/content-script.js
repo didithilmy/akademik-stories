@@ -18,12 +18,12 @@ appsElements[0].prepend(div);
 appendScripts();
 
 function appendScripts() {
-    var s = document.createElement("script");
+    s = document.createElement("script");
     s.type = "text/javascript";
     s.innerHTML = akaStoriesOnClick;
     document.head.appendChild(s);
 
-    var confirmScript = document.createElement("script");
+    confirmScript = document.createElement("script");
     confirmScript.type = "text/javascript";
     confirmScript.src = "/vendor/jquery-confirm-3.3.2/dist/jquery-confirm.min.js";
     document.head.appendChild(confirmScript);
@@ -50,6 +50,14 @@ function getYourStoryCircleHTML() {
         '    <div><small style="color: #a0a0a0">Your Story</small></div>' +
         '</div>'
     );
+}
+
+function getNim() {
+    navbarBrandLink = document.getElementsByClassName("navbar-brand")[0];
+    href = navbarBrandLink.href;
+    queryString = href.split('?')[1];
+    nim = queryString.split(':')[1];
+    return nim;
 }
 
 function akaStoriesOnClick(username, imageUrl) {
