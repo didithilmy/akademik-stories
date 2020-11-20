@@ -1,10 +1,22 @@
 from rest_framework import serializers
+from datetime import datetime, timedelta
 from .models import StoryUser
 
 class StorySerializer(serializers.ModelSerializer):
     class Meta:
         model = StoryUser
-        fields = ['username', 'story_image', 'updated_at']
+        fields = ['username', 'updated_at', 'story_image']
+
+class UserStorySerializer(serializers.ModelSerializer):
+    stories = serializers.SerializerMethodField() # StorySerializer(many=True, read_only=True)
+
+    def get_stories(self, story_user):
+        qs = story_user.following.order_by("-updated_at").exclude(story_image='').filter(updated_at__gte=datetime.utcnow() - timedelta(hours=24))
+        return StorySerializer(qs, many=True).data
+
+    class Meta:
+        model = StoryUser
+        fields = ['stories']
 
 
 class FollowerSerializer(serializers.ModelSerializer):
@@ -12,13 +24,16 @@ class FollowerSerializer(serializers.ModelSerializer):
         model = StoryUser
         fields = ['username']
 
-class StoryUserSerializer(serializers.ModelSerializer):
-    following = StorySerializer(many=True, read_only=True)
+class UserSerializer(serializers.ModelSerializer):
+    following = serializers.SerializerMethodField()
     followers = serializers.SerializerMethodField()
 
     def get_followers(self, story_user):
         qs = StoryUser.objects.filter(following=story_user)
         return [x.get('username') for x in FollowerSerializer(qs, many=True).data]
+
+    def get_following(self, story_user):
+        return [x.username for x in story_user.following.all()]
 
     class Meta:
         model = StoryUser

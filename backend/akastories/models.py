@@ -1,7 +1,11 @@
 from django.db import models
+from django.core.files.storage import FileSystemStorage
 from django_resized import ResizedImageField
+from django.conf import settings
 
 # Create your models here.
+
+fs = FileSystemStorage(settings.MEDIA_ROOT)
 
 def profile_image_file_name(instance, filename):
     return '/'.join(['profile', instance.nim + '.jpg'])
@@ -11,11 +15,11 @@ def story_file_name(instance, filename):
 
 class StoryUser(models.Model):
     nim = models.CharField(max_length=8, primary_key=True)
-    username = models.CharField(max_length=20)
+    username = models.CharField(max_length=20, unique=True)
     updated_at = models.DateTimeField(auto_now=True)
     following = models.ManyToManyField("self", symmetrical=False, blank=True)
-    profile_image = ResizedImageField(size=[500, 300], upload_to=profile_image_file_name, blank=True, null=True, quality=100, force_format='JPEG', keep_meta=False)
-    story_image = ResizedImageField(size=[1000, 1000], upload_to=story_file_name, blank=True, null=True, quality=100, force_format='JPEG', keep_meta=False)
+    profile_image = ResizedImageField(size=[500, 300], upload_to=profile_image_file_name, storage=fs, blank=True, null=True, quality=100, force_format='JPEG', keep_meta=False)
+    story_image = ResizedImageField(size=[1000, 1000], upload_to=story_file_name, storage=fs, blank=True, null=True, quality=100, force_format='JPEG', keep_meta=False)
 
     def __str__(self):
         return self.nim

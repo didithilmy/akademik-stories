@@ -1,13 +1,20 @@
 from django.shortcuts import render
+from django.utils.timezone import make_aware
 from rest_framework import generics, status
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
-from .serializers import StoryUserSerializer, UpdateDataSerializer
+from .serializers import UserSerializer, UpdateDataSerializer, UserStorySerializer
 from .models import StoryUser
 # Create your views here.
 
-class StoryUserView(generics.RetrieveAPIView):
-    serializer_class = StoryUserSerializer
+class UserView(generics.RetrieveAPIView):
+    serializer_class = UserSerializer
+    lookup_field = 'nim'
+    queryset = StoryUser.objects.all()
+
+
+class StoryView(generics.RetrieveAPIView):
+    serializer_class = UserStorySerializer
     lookup_field = 'nim'
     queryset = StoryUser.objects.all()
 

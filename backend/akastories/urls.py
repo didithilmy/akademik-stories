@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import StoryUserView, UpdateDataView
+from .views import UserView, UpdateDataView, StoryView
 
 urlpatterns = [
-    path('story/<str:nim>/', StoryUserView.as_view(), name='story-user'),
+    path('user/<str:nim>/', UserView.as_view(), name='user'),
+    path('story/<str:nim>/', StoryView.as_view(), name='story'),
     path('update/', UpdateDataView.as_view(), name='update-data'),
 ]
