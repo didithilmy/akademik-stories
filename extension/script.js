@@ -1,12 +1,1 @@
-function akaStoriesOnClick() {
-    $.alert({
-        title: 'Story',
-        content: 'Hello',
-        buttons: {
-            close: {
-                text: 'Tutup',
-                keys: ['esc']
-            }
-        }
-    })
-}
+AKA_STORIES_API_BASE_URL = "http://localhost:8000"

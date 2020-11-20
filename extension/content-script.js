@@ -23,6 +23,7 @@ function appendScripts() {
     s.type = "text/javascript";
     s.innerHTML = [
         akaStoriesOnClick, 
+        getNim,
         (akaYourStoryOnClick + '').replace('{{url}}', chrome.runtime.getURL('html/profile.html')),
         (akaFollowersOnClick + '').replace('{{url}}', chrome.runtime.getURL('html/followers.html'))
     ].join('\n');
@@ -32,6 +33,11 @@ function appendScripts() {
     confirmScript.type = "text/javascript";
     confirmScript.src = "/vendor/jquery-confirm-3.3.2/dist/jquery-confirm.min.js";
     document.head.appendChild(confirmScript);
+
+    script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = chrome.runtime.getURL('script.js')
+    document.head.appendChild(script);
 }
 
 function getStoryCircleHTML(imgUrl, username) {
@@ -114,6 +120,31 @@ function akaYourStoryOnClick() {
 }
 
 function akaFollowersOnClick() {
+    getUserData = function() {
+        nim = getNim();
+        return $.get(AKA_STORIES_API_BASE_URL + '/api/user/' + nim + '/');
+    }
+
+    getPage = function() {
+        return $.ajax({
+            url: '{{url}}',
+            dataType: 'html',
+            method: 'get'
+        });
+    }
+
+    appendData = function(data, dom) {
+        for(i = 0; i < data.followers.length; i++) {
+            follower = data.followers[i];
+            $(dom).find('#aka-stories-followers-table tbody').append('<tr><td>' + follower + '</td><td align="right"><i class="glyphicon glyphicon-remove-circle"></i></td></tr>')
+        }
+
+        for(i = 0; i < data.following.length; i++) {
+            following = data.following[i];
+            $(dom).find('#aka-stories-following-table tbody').append('<tr><td>' + following + '</td><td align="right"><i class="glyphicon glyphicon-remove-circle"></i></td></tr>')
+        }
+    }
+
     $.alert({
         title: "Followers & Following",
         backgroundDismiss: true,
@@ -125,12 +156,15 @@ function akaFollowersOnClick() {
         },
         content: function () {
             var self = this;
-            return $.ajax({
-                url: '{{url}}',
-                dataType: 'html',
-                method: 'get'
-            }).done(function (response) {
-                self.setContent(response);
+
+            return getUserData().done(function(userdata) {
+                getPage().done(function (response) {
+                    doc = new DOMParser().parseFromString(response, "text/html");
+                    appendData(userdata, doc);
+                    self.setContent(doc.documentElement.innerHTML);
+                }).fail(function(){
+                    self.setContent('Something went wrong.');
+                });
             }).fail(function(){
                 self.setContent('Something went wrong.');
             });
