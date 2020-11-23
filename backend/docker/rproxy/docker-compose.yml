@@ -1,0 +1,44 @@
+version: '2'
+
+services:
+  nginx-proxy:
+    restart: unless-stopped
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./config/custom_proxy.conf:/etc/nginx/conf.d/custom_proxy.conf:ro
+    networks:
+      - akastories
+
+  letsencrypt:
+    restart: unless-stopped
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: nginx-proxy-le
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - certs:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - akastories
+
+volumes:
+  conf:
+  vhost:
+  html:
+  dhparam:
+  certs:
+
+networks:
+  akastories:
+    external:
+        name: akastories
