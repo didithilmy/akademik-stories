@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+    backend:
+        build: .
+        networks: 
+            - backend
+            - akastories
+        ports:
+            - '8000:8000'
+        environment:
+            VIRTUAL_HOST: akastories.akusukanugas.com
+            VIRTUAL_PORT: 8000
+            LETSENCRYPT_HOST: akastories.akusukanugas.com
+            DATABASE_URL: 'postgres://akastories:akastories123@postgres:5432/akastories'
+            DEBUG: "${DEBUG}"
+    postgres:
+        image: postgres
+        restart: always
+        networks: 
+            - backend
+        environment:
+            POSTGRES_DB: akastories
+            POSTGRES_USER: akastories
+            POSTGRES_PASSWORD: akastories123
+        volumes:
+            - "psql_data:/var/lib/postgresql/data"
+networks:
+    backend:
+    akastories:
+        external:
+            name: akastories
+volumes:
+    psql_data:
