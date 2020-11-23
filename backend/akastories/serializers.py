@@ -37,7 +37,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StoryUser
-        fields = ['username', 'following', 'followers', 'story_image']
+        fields = ['username', 'following', 'followers', 'profile_image', 'story_image']
 
 
 class UpdateDataSerializer(serializers.Serializer):
@@ -45,3 +45,8 @@ class UpdateDataSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=20, required=False)
     profile_image = serializers.ImageField(required=False)
     story_image = serializers.ImageField(required=False)
+
+
+class FollowUserSerializer(serializers.Serializer):
+    nim = serializers.CharField(min_length=8, max_length=8)
+    username = serializers.CharField(max_length=20, required=False)

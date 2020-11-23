@@ -12,11 +12,52 @@
         $("#aka-stories-following").show();
         $("#aka-stories-followers").hide();
     }
+
+    function updateFollowersFollowingList() {
+        nim = getNim();
+        $.get(AKA_STORIES_API_BASE_URL + '/api/user/' + nim + '/').done(function(data) {
+            $('#aka-stories-followers-table tbody').html('');
+            for(i = 0; i < data.followers.length; i++) {
+                follower = data.followers[i];
+                $('#aka-stories-followers-table tbody').append('<tr><td>' + follower + '</td><td align="right"><i onclick="removeFollower(\'' + follower + '\')" class="glyphicon glyphicon-remove-circle akastories-ic-remove"></i></td></tr>')
+            }
+
+            $('#aka-stories-following-table tbody').html('');
+            for(i = 0; i < data.following.length; i++) {
+                following = data.following[i];
+                $('#aka-stories-following-table tbody').append('<tr><td>' + following + '</td><td align="right"><i onclick="unfollow(\'' + following + '\')" class="glyphicon glyphicon-remove-circle akastories-ic-remove"></i></td></tr>')
+            }
+        });
+    }
+
+    function follow() {
+        username = $("#follow-username").val();
+        $.post(AKA_STORIES_API_BASE_URL + '/api/follow/', { nim: getNim(), username: username }).done(function(r) {
+            updateFollowersFollowingList();
+            $("#follow-username").val('');
+        })
+    }
+
+    function unfollow(username) {
+        $.post(AKA_STORIES_API_BASE_URL + '/api/unfollow/', { nim: getNim(), username: username }).done(function(r) {
+            updateFollowersFollowingList();
+        })
+    }
+
+    function removeFollower(username) {
+        $.post(AKA_STORIES_API_BASE_URL + '/api/remove-follower/', { nim: getNim(), username: username }).done(function(r) {
+            updateFollowersFollowingList();
+        })
+    }
 </script>
 
 <style type="text/css">
     .aka-stories-dialog ul.nav-tabs li {
         cursor: pointer;
+    }
+    .aka-stories-dialog .akastories-ic-remove {
+        cursor: pointer;
+        color: #d9534f
     }
 </style>
 
@@ -38,6 +79,9 @@
         <label for="follow-username">Follow username:</label>
         <div class="input-group" style="width: 100%">
             <input type="text" class="form-control" id="follow-username">
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-primary" onclick="javascript:follow()">Follow</button>
+            </span>
         </div>
     </div>
 </div>

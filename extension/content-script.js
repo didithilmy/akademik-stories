@@ -136,12 +136,12 @@ function akaFollowersOnClick() {
     appendData = function(data, dom) {
         for(i = 0; i < data.followers.length; i++) {
             follower = data.followers[i];
-            $(dom).find('#aka-stories-followers-table tbody').append('<tr><td>' + follower + '</td><td align="right"><i class="glyphicon glyphicon-remove-circle"></i></td></tr>')
+            $(dom).find('#aka-stories-followers-table tbody').append('<tr><td>' + follower + '</td><td align="right"><i onclick="removeFollower(\'' + follower + '\')" class="glyphicon glyphicon-remove-circle akastories-ic-remove"></i></td></tr>')
         }
 
         for(i = 0; i < data.following.length; i++) {
             following = data.following[i];
-            $(dom).find('#aka-stories-following-table tbody').append('<tr><td>' + following + '</td><td align="right"><i class="glyphicon glyphicon-remove-circle"></i></td></tr>')
+            $(dom).find('#aka-stories-following-table tbody').append('<tr><td>' + following + '</td><td align="right"><i onclick="unfollow(\'' + following + '\')" class="glyphicon glyphicon-remove-circle akastories-ic-remove"></i></td></tr>')
         }
     }
 
