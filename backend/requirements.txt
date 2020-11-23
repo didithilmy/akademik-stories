@@ -5,4 +5,5 @@ django-cors-headers
 gunicorn~=20.0
 dj-database-url
 psycopg2-binary~=2.8
-Pillow
+Pillow~=8.0
+whitenoise~=5.2
