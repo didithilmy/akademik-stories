@@ -17,7 +17,8 @@ import environ
 
 env = environ.Env(
     DEBUG=(bool, False),
-    AWS_S3_ENDPOINT_URL=(str, None)
+    AWS_S3_ENDPOINT_URL=(str, None),
+    AWS_QUERYSTRING_AUTH=(bool, True)
 )
 
 # reading .env file
@@ -147,3 +148,4 @@ AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 AWS_S3_ENDPOINT_URL = env('AWS_S3_ENDPOINT_URL')
 AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
 AWS_LOCATION = env('AWS_LOCATION')
+AWS_QUERYSTRING_AUTH = env('AWS_QUERYSTRING_AUTH')

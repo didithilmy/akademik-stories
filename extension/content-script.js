@@ -63,7 +63,7 @@ function akaStoriesOnClick(username, imageUrl) {
         backgroundDismiss: true,
         buttons: {
             close: {
-                text: 'Tutup',
+                text: 'Close',
                 keys: ['esc']
             }
         }
@@ -94,7 +94,7 @@ function akaYourStoryOnClick() {
         backgroundDismiss: true,
         buttons: {
             close: {
-                text: 'Tutup',
+                text: 'Close',
                 keys: ['esc']
             }
         },
@@ -151,7 +151,7 @@ function akaFollowersOnClick() {
         backgroundDismiss: true,
         buttons: {
             close: {
-                text: 'Tutup',
+                text: 'Close',
                 keys: ['esc']
             }
         },

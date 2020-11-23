@@ -18,6 +18,7 @@ services:
             AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
             AWS_S3_ENDPOINT_URL: "${AWS_S3_ENDPOINT_URL}"
             AWS_STORAGE_BUCKET_NAME: "${AWS_STORAGE_BUCKET_NAME}"
+            AWS_QUERYSTRING_AUTH: "${AWS_QUERYSTRING_AUTH}"
             DEBUG: "${DEBUG}"
     postgres:
         image: postgres
