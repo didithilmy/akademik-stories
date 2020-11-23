@@ -1,4 +1,4 @@
-AKA_STORIES_API_BASE_URL = "http://localhost:8000"
+AKA_STORIES_API_BASE_URL = "https://akastories.akusukanugas.com"
 
 function getStoryCircleHTML(imgUrl, storyImg, username) {
     if (!!imgUrl && !(imgUrl.indexOf('http://') === 0 || imgUrl.indexOf('https://') === 0)) {

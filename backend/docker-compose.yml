@@ -13,6 +13,11 @@ services:
             VIRTUAL_PORT: 8000
             LETSENCRYPT_HOST: akastories.akusukanugas.com
             DATABASE_URL: 'postgres://akastories:akastories123@postgres:5432/akastories'
+            AWS_LOCATION: uploads
+            AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+            AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+            AWS_S3_ENDPOINT_URL: "${AWS_S3_ENDPOINT_URL}"
+            AWS_STORAGE_BUCKET_NAME: "${AWS_STORAGE_BUCKET_NAME}"
             DEBUG: "${DEBUG}"
     postgres:
         image: postgres
