@@ -1,28 +1,3 @@
-# Akademik Stories
-
-This is a Chrome extension that adds an Instagram-like Stories feature to SIX ITB!
-
-![](img/ss1.png)
-
-## Development Guide
-Chrome extension source code is in [`extension`](extension), refer to Google Chrome Extensions developers guide.
-
-Django code is in [`backend`](backend). Please figure it out for yourself :)
-
-## Installation Guide
-Download and install the Chrome extension (crx) file [akastories.crx](https://github.com/didithilmy/akademik-stories/releases/download/v0.0.1/akastories.crx), then follow the instructions.
-
-## Disclaimer
-This extension is provided "as is" without any guarantee whatsoever. Feel free to fork, tinker, or do whatever you want to the source code. Currently, the backend is installed in a free-tier AWS instance, and can be disabled at any time.
-
-
-I employ **no security measure** to protect the uploaded data, so make sure you don't upload anything private. I reserve the right to delete whatever data you upload to the backend.
-
-### USE AT YOUR OWN RISK
-
-
-## License
-```
 MIT License
 
 Copyright (c) 2020 Muhammad Aditya Hilmy
@@ -44,4 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-```
