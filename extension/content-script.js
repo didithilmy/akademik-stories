@@ -109,7 +109,12 @@ function akaYourStoryOnClick() {
                     self.setContent('Something went wrong.');
                 });
             }).fail(function(){
-                self.setContent('Something went wrong.');
+                getPage().done(function (response) {
+                    doc = new DOMParser().parseFromString(response, "text/html");
+                    self.setContent(doc.documentElement.innerHTML.replace("{{username}}", ""));
+                }).fail(function(){
+                    self.setContent('Something went wrong.');
+                });
             });
         }
     })
@@ -161,8 +166,12 @@ function akaFollowersOnClick() {
                 }).fail(function(){
                     self.setContent('Something went wrong.');
                 });
-            }).fail(function(){
-                self.setContent('Something went wrong.');
+            }).fail(function(jqXHR){
+                if (jqXHR.status === 404) {
+                    self.setContent('Please set a username on Your Story menu.');
+                } else {
+                    self.setContent('Something went wrong.');
+                }
             });
         }
     })

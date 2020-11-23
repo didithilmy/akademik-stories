@@ -14,6 +14,7 @@
     }
 
     function updateFollowersFollowingList() {
+        $("#aka-stories-following-error").hide();
         nim = getNim();
         $.get(AKA_STORIES_API_BASE_URL + '/api/user/' + nim + '/').done(function(data) {
             $('#aka-stories-followers-table tbody').html('');
@@ -29,7 +30,7 @@
             }
 
             akaStoriesLoadStories();
-        });
+        })
     }
 
     function follow() {
@@ -37,7 +38,9 @@
         $.post(AKA_STORIES_API_BASE_URL + '/api/follow/', { nim: getNim(), username: username }).done(function(r) {
             updateFollowersFollowingList();
             $("#follow-username").val('');
-        })
+        }).fail(function(e) {
+            $("#aka-stories-following-error").show().html("Username is not found");
+        });
     }
 
     function unfollow(username) {
@@ -65,15 +68,10 @@
 
 <div class="aka-stories-dialog" id="followers-dialog">
     <ul class="nav nav-tabs">
-        <li role="presentation" class="active" id="tab-followers"><a onclick="openFollowers();">Followers</a></li>
-        <li role="presentation" id="tab-following"><a onclick="openFollowing();">Following</a></li>
+        <li role="presentation" class="active" id="tab-following"><a onclick="openFollowing();">Following</a></li>
+        <li role="presentation" id="tab-followers"><a onclick="openFollowers();">Followers</a></li>
     </ul>
-    <div id="aka-stories-followers">
-        <table class="table" id="aka-stories-followers-table">
-            <tbody></tbody>
-        </table>
-    </div>
-    <div id="aka-stories-following" style="display: none">
+    <div id="aka-stories-following">
         <table class="table" id="aka-stories-following-table">
             <tbody></tbody>
         </table>
@@ -85,5 +83,11 @@
                 <button type="button" class="btn btn-primary" onclick="javascript:follow()">Follow</button>
             </span>
         </div>
+        <div class="alert alert-danger" role="alert" style="display: none; margin-top: 16px;" id="aka-stories-following-error"></div>
+    </div>
+    <div id="aka-stories-followers" style="display: none;">
+        <table class="table" id="aka-stories-followers-table">
+            <tbody></tbody>
+        </table>
     </div>
 </div>

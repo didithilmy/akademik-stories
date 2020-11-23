@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.utils.timezone import make_aware
+from django.db import IntegrityError
 from rest_framework import generics, status
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
@@ -44,9 +45,11 @@ class UpdateDataView(generics.GenericAPIView):
         if profile_image:
             story_user.profile_image = profile_image
         
-        story_user.save()
-
-        return Response(UserSerializer(story_user).data)
+        try:
+            story_user.save()
+            return Response(UserSerializer(story_user).data)
+        except IntegrityError:
+            return Response({'code': 'username_taken', 'detail': 'Username is taken'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class FollowUserView(generics.GenericAPIView):
