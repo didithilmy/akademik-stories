@@ -10,7 +10,13 @@ Chrome extension source code is in [`extension`](extension), refer to Google Chr
 Django code is in [`backend`](backend). Please figure it out for yourself :)
 
 ## Installation Guide
-Download and install the Chrome extension (crx) file [akastories.crx](https://github.com/didithilmy/akademik-stories/releases/download/v0.0.1/akastories.crx), then follow the instructions.
+Since the extension is not available on the Chrome Web Store, this is what you have to do:
+1. Download the [release ZIP file](https://github.com/didithilmy/akademik-stories/releases/download/v0.0.1/extension.zip) and unzip it somewhere.
+2. Open `chrome://extensions` in Chrome.
+3. Turn on Developer mode (usually in the top-right).
+4. Click on "Load Unpacked".
+5. Select the folder that was unzipped.
+6. Open `akademik.itb.ac.id`, log in, and enjoy!
 
 ## Disclaimer
 This extension is provided "as is" without any guarantee whatsoever. Feel free to fork, tinker, or do whatever you want to the source code. Currently, the backend is installed in a free-tier AWS instance, and can be disabled at any time.
