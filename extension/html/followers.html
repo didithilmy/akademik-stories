@@ -27,6 +27,8 @@
                 following = data.following[i];
                 $('#aka-stories-following-table tbody').append('<tr><td>' + following + '</td><td align="right"><i onclick="unfollow(\'' + following + '\')" class="glyphicon glyphicon-remove-circle akastories-ic-remove"></i></td></tr>')
             }
+
+            akaStoriesLoadStories();
         });
     }
 

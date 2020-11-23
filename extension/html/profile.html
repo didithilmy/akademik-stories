@@ -1,16 +1,44 @@
+<script type="text/javascript">
+function uploadStories() {
+    fd = new FormData();
+    fd.append("nim", getNim());
+    fd.append("username", $("#aka-stories-update-username").val());
+
+    profileImageFiles = $("#aka-stories-update-image")[0].files;
+    if(profileImageFiles.length > 0)
+        fd.append("profile_image", profileImageFiles[0]);
+    
+    storyImageFiles = $("#aka-stories-update-story")[0].files;
+    if(storyImageFiles.length > 0)
+        fd.append("story_image", storyImageFiles[0]);
+    
+    $.ajax({
+        url: AKA_STORIES_API_BASE_URL + '/api/update/',
+        type: 'post',
+        data: fd,
+        contentType: false,
+        processData: false,
+    }).done(function(response) {
+        console.log("Stories updated!");
+    })
+}
+</script>
 <div class="aka-stories-dialog">
-    <label for="username">Username:</label>
+    <label for="aka-stories-update-username">Username:</label>
     <div class="input-group" style="width: 100%">
-        <input type="text" class="form-control" id="username">
+        <input type="text" class="form-control" id="aka-stories-update-username" value="{{username}}" />
     </div>
     <div style="margin-top: 16px;"></div>
-    <label for="image">Change profile image:</label>
+    <label for="aka-stories-update-image">Change profile image:</label>
     <div class="input-group" style="width: 100%;">
-        <input type="file" class="form-control" id="image">
+        <input type="file" class="form-control" id="aka-stories-update-image" />
     </div>
     <div style="margin-top: 16px;"></div>
-    <div class="uploader">
-        Upload new story
+    <label for="aka-stories-update-story">Upload a new story:</label>
+    <div class="input-group" style="width: 100%;">
+        <input type="file" class="form-control" id="aka-stories-update-story" />
     </div>
-    <input type="file" class="form-control" id="image" style="display: none">
+    <div style="margin-top: 16px">
+        <button type="button" class="btn btn-primary btn-sm" onclick="uploadStories()">Update</button>
+    </div>
 </div>

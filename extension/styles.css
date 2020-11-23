@@ -7,6 +7,11 @@
   overflow: auto;
 }
 
+.aka-stories-horz {
+  display: flex;
+  flex-direction: row;
+}
+
 .aka-stories .story {
     text-align: center;
     margin: 0 12px 0 12px;

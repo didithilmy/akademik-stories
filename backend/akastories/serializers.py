@@ -5,7 +5,7 @@ from .models import StoryUser
 class StorySerializer(serializers.ModelSerializer):
     class Meta:
         model = StoryUser
-        fields = ['username', 'updated_at', 'story_image']
+        fields = ['username', 'updated_at', 'story_image', 'profile_image']
 
 class UserStorySerializer(serializers.ModelSerializer):
     stories = serializers.SerializerMethodField() # StorySerializer(many=True, read_only=True)

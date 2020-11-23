@@ -1,17 +1,7 @@
 var div = document.createElement("div");
 div.className = "aka-stories col-xs-12 pa-2"
 
-var stories = [
-    getYourStoryCircleHTML(),
-    getFollowersCircleHTML(),
-    getStoryCircleHTML('https://storage.googleapis.com/hmif-insights/portraits/17/18217025.jpg', 'didithilmy'),
-    getStoryCircleHTML('https://storage.googleapis.com/hmif-insights/portraits/17/13517007.jpg', 'rid1hady'),
-    getStoryCircleHTML('https://storage.googleapis.com/hmif-insights/portraits/17/13517091.jpg', 'adyaksa_w'),
-    getStoryCircleHTML('https://storage.googleapis.com/hmif-insights/portraits/17/18217018.jpg', 'luthfihakim'),
-    '<div>&nbsp;&nbsp;</div>'
-]
-
-div.innerHTML = stories.join('');
+div.innerHTML = [getYourStoryCircleHTML(), getFollowersCircleHTML(), '<div class="aka-stories-horz" id="aka-stories-container"></div>'].join('');
 
 var appsElements = document.getElementsByClassName('apps');
 appsElements[0].prepend(div);
@@ -38,20 +28,6 @@ function appendScripts() {
     script.type = "text/javascript";
     script.src = chrome.runtime.getURL('script.js')
     document.head.appendChild(script);
-}
-
-function getStoryCircleHTML(imgUrl, username) {
-    return (
-        '<div class="story" onclick="javascript:akaStoriesOnClick(\'' + username + '\', \'' + imgUrl + '\')">' +
-        '   <div class="circle">' +
-        '       <div class="img" style="background-image: url(' + imgUrl + ');"></div>' +
-        '       <svg viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg" style="enable-background:new -580 439 577.9 194;" xml:space="preserve">' +
-        '           <circle cx="35" cy="35" r="33" />' +
-        '       </svg>' +
-        '   </div>' +
-        '   <small>' + username + '</small>' +
-        '</div>'
-    );
 }
 
 function getYourStoryCircleHTML() {
@@ -95,6 +71,24 @@ function akaStoriesOnClick(username, imageUrl) {
 }
 
 function akaYourStoryOnClick() {
+    getUserData = function() {
+        nim = getNim();
+        return $.get(AKA_STORIES_API_BASE_URL + '/api/user/' + nim + '/');
+    }
+
+    getPage = function() {
+        return $.ajax({
+            url: '{{url}}',
+            dataType: 'html',
+            method: 'get'
+        });
+    }
+
+    htmlEntities = function (str) {
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    
+
     $.alert({
         title: "Your Story",
         backgroundDismiss: true,
@@ -106,12 +100,14 @@ function akaYourStoryOnClick() {
         },
         content: function () {
             var self = this;
-            return $.ajax({
-                url: '{{url}}',
-                dataType: 'html',
-                method: 'get'
-            }).done(function (response) {
-                self.setContent(response);
+
+            return getUserData().done(function(userdata) {
+                getPage().done(function (response) {
+                    doc = new DOMParser().parseFromString(response, "text/html");
+                    self.setContent(doc.documentElement.innerHTML.replace("{{username}}", htmlEntities(userdata.username)));
+                }).fail(function(){
+                    self.setContent('Something went wrong.');
+                });
             }).fail(function(){
                 self.setContent('Something went wrong.');
             });
